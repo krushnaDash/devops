@@ -1,0 +1,260 @@
+<mxfile host="Electron" modified="2026-07-10T05:30:00.000Z" agent="Cascade" version="21.0.0" type="device">
+  <diagram id="cicd-pipeline" name="CI/CD Pipeline Flow">
+    <mxGraphModel dx="1400" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="2339" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- TITLE -->
+        <mxCell id="title" value="CPM Platform — End-to-End CI/CD Pipeline Flow" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=20;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="200" y="20" width="1000" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="subtitle" value="CPM-&lt;APP&gt;-&lt;ENV&gt;-CI  →  CPM-&lt;APP&gt;-&lt;ENV&gt;-CD   |   GitOps-driven · Immutable Artifacts · Security-gated" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=11;fontStyle=2;" vertex="1" parent="1">
+          <mxGeometry x="200" y="50" width="1000" height="20" as="geometry" />
+        </mxCell>
+
+        <!-- ======================================================= -->
+        <!-- LEGEND                                                    -->
+        <!-- ======================================================= -->
+        <mxCell id="leg" value="Legend" style="swimlane;startSize=25;fillColor=#f5f5f5;strokeColor=#666;fontStyle=1;fontSize=10;rounded=1;" vertex="1" parent="1">
+          <mxGeometry x="1200" y="80" width="340" height="220" as="geometry" />
+        </mxCell>
+        <mxCell id="leg1" value="CI Phase (Build &amp; Package)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=9;" vertex="1" parent="leg"><mxGeometry x="15" y="35" width="200" height="25" as="geometry" /></mxCell>
+        <mxCell id="leg2" value="Security Gate" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=9;" vertex="1" parent="leg"><mxGeometry x="15" y="68" width="200" height="25" as="geometry" /></mxCell>
+        <mxCell id="leg3" value="CD / Deployment Phase" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=9;" vertex="1" parent="leg"><mxGeometry x="15" y="101" width="200" height="25" as="geometry" /></mxCell>
+        <mxCell id="leg4" value="Quality / Approval Gate" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=9;" vertex="1" parent="leg"><mxGeometry x="15" y="132" width="100" height="45" as="geometry" /></mxCell>
+        <mxCell id="leg5" value="Manual Approval Gate" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=9;" vertex="1" parent="leg"><mxGeometry x="125" y="132" width="100" height="45" as="geometry" /></mxCell>
+        <mxCell id="leg6" value="Monitoring / Rollback" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=9;" vertex="1" parent="leg"><mxGeometry x="15" y="185" width="200" height="25" as="geometry" /></mxCell>
+
+        <!-- ======================================================= -->
+        <!-- PHASE LABELS (swimlane columns on left)                  -->
+        <!-- ======================================================= -->
+        <mxCell id="ph_ci" value="CI PHASE" style="text;html=1;strokeColor=#6c8ebf;fillColor=#dae8fc;align=center;verticalAlign=middle;fontSize=11;fontStyle=1;rounded=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="90" width="130" height="530" as="geometry" />
+        </mxCell>
+        <mxCell id="ph_artifact" value="ARTIFACT" style="text;html=1;strokeColor=#9673a6;fillColor=#e1d5e7;align=center;verticalAlign=middle;fontSize=11;fontStyle=1;rounded=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="640" width="130" height="220" as="geometry" />
+        </mxCell>
+        <mxCell id="ph_cd" value="CD PHASE" style="text;html=1;strokeColor=#82b366;fillColor=#d5e8d4;align=center;verticalAlign=middle;fontSize=11;fontStyle=1;rounded=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="880" width="130" height="1350" as="geometry" />
+        </mxCell>
+
+        <!-- ======================================================= -->
+        <!-- CI PHASE                                                  -->
+        <!-- ======================================================= -->
+
+        <!-- Step 1: Developer Push -->
+        <mxCell id="s1" value="&lt;b&gt;Developer Code Push&lt;/b&gt;&lt;br/&gt;Feature branch → PR → Code Review → Merge to main" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#6d8764;strokeColor=#3a5431;fontColor=#ffffff;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="220" y="90" width="420" height="55" as="geometry" />
+        </mxCell>
+
+        <!-- Arrow -->
+        <mxCell id="a1" value="" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#333;strokeWidth=2;" edge="1" source="s1" target="s2" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <!-- Step 2: CI Trigger -->
+        <mxCell id="s2" value="&lt;b&gt;CPM-&lt;APP&gt;-&lt;ENV&gt;-CI Pipeline Triggered&lt;/b&gt;&lt;br/&gt;GitHub Actions / Jenkins · Branch: main · Path filter per app" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=10;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="220" y="180" width="420" height="55" as="geometry" />
+        </mxCell>
+
+        <mxCell id="a2" value="" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#6c8ebf;strokeWidth=2;" edge="1" source="s2" target="s3" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <!-- Step 3: Checkout + Lint -->
+        <mxCell id="s3" value="&lt;b&gt;1. Source Checkout + Lint&lt;/b&gt;&lt;br/&gt;actions/checkout · Branch policy validation · Gitleaks secret scan" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="220" y="270" width="420" height="55" as="geometry" />
+        </mxCell>
+
+        <mxCell id="a3" value="" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#6c8ebf;strokeWidth=2;" edge="1" source="s3" target="s4" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <!-- Step 4: Build -->
+        <mxCell id="s4" value="&lt;b&gt;2. Build&lt;/b&gt;&lt;br/&gt;Maven / Gradle / npm · Compile · Dependency resolution" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="220" y="360" width="420" height="55" as="geometry" />
+        </mxCell>
+
+        <mxCell id="a4" value="" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#6c8ebf;strokeWidth=2;" edge="1" source="s4" target="s5" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <!-- Step 5: Unit Tests -->
+        <mxCell id="s5" value="&lt;b&gt;3. Unit Tests + Code Coverage&lt;/b&gt;&lt;br/&gt;JUnit / Jest · Coverage threshold ≥ 80% · Report published" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="220" y="450" width="420" height="55" as="geometry" />
+        </mxCell>
+
+        <mxCell id="a5" value="" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#b85450;strokeWidth=2;" edge="1" source="s5" target="s6" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <!-- Step 6: SAST + Dependency Scan -->
+        <mxCell id="s6" value="&lt;b&gt;4. SAST + Dependency Audit&lt;/b&gt;&lt;br/&gt;SonarQube · Checkmarx / Semgrep · OWASP Dependency Check" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="220" y="540" width="420" height="55" as="geometry" />
+        </mxCell>
+
+        <mxCell id="a6" value="" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#b85450;strokeWidth=2;" edge="1" source="s6" target="s7" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <!-- Step 7: Quality Gate decision -->
+        <mxCell id="s7" value="&lt;b&gt;Quality Gate&lt;/b&gt;" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=10;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="330" y="625" width="200" height="80" as="geometry" />
+        </mxCell>
+
+        <!-- Fail path -->
+        <mxCell id="a7_fail" value="FAIL → Pipeline Aborted&lt;br/&gt;Slack/Teams Notification" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#b85450;strokeWidth=2;dashed=1;fontSize=9;fontStyle=2;" edge="1" source="s7" target="fail_box" parent="1">
+          <mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="730" y="665" /></Array></mxGeometry>
+        </mxCell>
+        <mxCell id="fail_box" value="❌ Pipeline Failed&lt;br/&gt;Notify Developer" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#b85450;strokeColor=#a0322d;fontColor=#ffffff;fontSize=9;" vertex="1" parent="1">
+          <mxGeometry x="780" y="635" width="180" height="55" as="geometry" />
+        </mxCell>
+
+        <!-- Pass path -->
+        <mxCell id="a7_pass" value="PASS" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#82b366;strokeWidth=2;fontSize=9;fontStyle=1;" edge="1" source="s7" target="s8" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <!-- Step 8: Docker Build -->
+        <mxCell id="s8" value="&lt;b&gt;5. Docker Build (Multi-Stage)&lt;/b&gt;&lt;br/&gt;Distroless / Alpine base · Minimal final image · Build args" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="220" y="740" width="420" height="55" as="geometry" />
+        </mxCell>
+
+        <mxCell id="a8" value="" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#b85450;strokeWidth=2;" edge="1" source="s8" target="s9" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <!-- Step 9: Container Scan -->
+        <mxCell id="s9" value="&lt;b&gt;6. Container Vulnerability Scan&lt;/b&gt;&lt;br/&gt;Trivy / Snyk · Fail on CRITICAL or HIGH CVE · SBOM generated" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="220" y="830" width="420" height="55" as="geometry" />
+        </mxCell>
+
+        <mxCell id="a9" value="" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#9673a6;strokeWidth=2;" edge="1" source="s9" target="s10" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <!-- Step 10: Push to ECR -->
+        <mxCell id="s10" value="&lt;b&gt;7. Push to Amazon ECR&lt;/b&gt;&lt;br/&gt;Tag: &lt;git-sha&gt;-&lt;build#&gt; · Immutable · latest tag (ref only)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="220" y="920" width="420" height="55" as="geometry" />
+        </mxCell>
+
+        <mxCell id="a10" value="" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#9673a6;strokeWidth=2;" edge="1" source="s10" target="s11" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <!-- Step 11: Update GitOps Repo -->
+        <mxCell id="s11" value="&lt;b&gt;8. Update GitOps Config Repo&lt;/b&gt;&lt;br/&gt;Automated PR · Update image.tag in Helm values · Auto-merge to main" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="220" y="1010" width="420" height="55" as="geometry" />
+        </mxCell>
+
+        <mxCell id="a11" value="" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#d79b00;strokeWidth=2;" edge="1" source="s11" target="s12" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <!-- Step 12: ArgoCD Sync -->
+        <mxCell id="s12" value="&lt;b&gt;ArgoCD Sync Triggered&lt;/b&gt;&lt;br/&gt;Detects diff · Pulls new manifest · Begins reconciliation" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=10;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="220" y="1100" width="420" height="55" as="geometry" />
+        </mxCell>
+
+        <!-- ======================================================= -->
+        <!-- CD PHASE — ENVIRONMENT PROMOTIONS                        -->
+        <!-- ======================================================= -->
+
+        <mxCell id="a12" value="" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#6c8ebf;strokeWidth=2;" edge="1" source="s12" target="s_dev" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <!-- DEV DEPLOY -->
+        <mxCell id="s_dev" value="&lt;b&gt;Deploy to DEV&lt;/b&gt; (cpm-peh-dev)&lt;br/&gt;Rolling update · Helm install/upgrade · Namespace: cpm-peh-dev" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="220" y="1200" width="420" height="55" as="geometry" />
+        </mxCell>
+
+        <mxCell id="a_dev_smoke" value="" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#6c8ebf;strokeWidth=2;" edge="1" source="s_dev" target="s_dev_smoke" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <mxCell id="s_dev_smoke" value="&lt;b&gt;Smoke Tests (DEV)&lt;/b&gt;&lt;br/&gt;Health endpoint · Critical paths · API contract check" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="220" y="1290" width="420" height="55" as="geometry" />
+        </mxCell>
+
+        <mxCell id="a_dev_gate" value="" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#6c8ebf;strokeWidth=2;" edge="1" source="s_dev_smoke" target="g_dev" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <mxCell id="g_dev" value="Auto Gate" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=9;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="330" y="1375" width="200" height="70" as="geometry" />
+        </mxCell>
+
+        <mxCell id="a_to_int" value="PASS → Promote to INT" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#82b366;strokeWidth=2;fontSize=9;fontStyle=1;" edge="1" source="g_dev" target="s_int" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <!-- INT DEPLOY -->
+        <mxCell id="s_int" value="&lt;b&gt;Deploy to INT&lt;/b&gt; (cpm-peh-int)&lt;br/&gt;Same image digest · Different config (int values.yaml)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="220" y="1480" width="420" height="55" as="geometry" />
+        </mxCell>
+
+        <mxCell id="a_int_test" value="" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#82b366;strokeWidth=2;" edge="1" source="s_int" target="s_int_test" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <mxCell id="s_int_test" value="&lt;b&gt;Integration Tests (INT)&lt;/b&gt;&lt;br/&gt;API contracts · Service-to-service flows · Consumer-driven tests" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="220" y="1570" width="420" height="55" as="geometry" />
+        </mxCell>
+
+        <mxCell id="a_int_gate" value="" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#82b366;strokeWidth=2;" edge="1" source="s_int_test" target="g_int" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <mxCell id="g_int" value="Auto Gate" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=9;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="330" y="1655" width="200" height="70" as="geometry" />
+        </mxCell>
+
+        <mxCell id="a_to_stg" value="PASS → Promote to STAGE" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#9673a6;strokeWidth=2;fontSize=9;fontStyle=1;" edge="1" source="g_int" target="s_stg" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <!-- STAGE DEPLOY -->
+        <mxCell id="s_stg" value="&lt;b&gt;Deploy to STAGE&lt;/b&gt; (cpm-peh-stg)&lt;br/&gt;Dedicated EKS · Same immutable image" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="220" y="1760" width="420" height="55" as="geometry" />
+        </mxCell>
+
+        <mxCell id="a_stg_test" value="" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#9673a6;strokeWidth=2;" edge="1" source="s_stg" target="s_stg_test" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <mxCell id="s_stg_test" value="&lt;b&gt;Regression Tests + UAT (STAGE)&lt;/b&gt;&lt;br/&gt;End-to-end regression · User acceptance testing · Security pen-test" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="220" y="1850" width="420" height="55" as="geometry" />
+        </mxCell>
+
+        <mxCell id="a_stg_gate" value="" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#9673a6;strokeWidth=2;" edge="1" source="s_stg_test" target="g_stg" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <mxCell id="g_stg" value="⚠ MANUAL&lt;br/&gt;GATE&lt;br/&gt;QA Sign-off" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=9;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="330" y="1935" width="200" height="80" as="geometry" />
+        </mxCell>
+
+        <mxCell id="a_to_prf" value="Approved → Promote to PERF" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#d6b656;strokeWidth=2;fontSize=9;fontStyle=1;" edge="1" source="g_stg" target="s_prf" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <!-- PERF DEPLOY -->
+        <mxCell id="s_prf" value="&lt;b&gt;Deploy to PERF&lt;/b&gt; (cpm-peh-prf)&lt;br/&gt;Dedicated EKS · Prod-like sizing · Same immutable image" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="220" y="2050" width="420" height="55" as="geometry" />
+        </mxCell>
+
+        <mxCell id="a_prf_test" value="" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#d6b656;strokeWidth=2;" edge="1" source="s_prf" target="s_prf_test" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <mxCell id="s_prf_test" value="&lt;b&gt;Load Tests + Capacity Planning (PERF)&lt;/b&gt;&lt;br/&gt;k6 / Locust · p99 latency SLO · Throughput targets · Kafka lag" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="220" y="2140" width="420" height="55" as="geometry" />
+        </mxCell>
+
+        <mxCell id="a_prf_gate" value="" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#d6b656;strokeWidth=2;" edge="1" source="s_prf_test" target="g_prf" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <mxCell id="g_prf" value="⚠ MANUAL&lt;br/&gt;GATE&lt;br/&gt;Perf Results" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=9;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="330" y="2225" width="200" height="80" as="geometry" />
+        </mxCell>
+
+        <mxCell id="a_to_prd" value="Approved → Promote to PROD" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#b85450;strokeWidth=2;fontSize=9;fontStyle=1;" edge="1" source="g_prf" target="g_prd_approval" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <!-- PROD APPROVAL -->
+        <mxCell id="g_prd_approval" value="⚠ PROD&lt;br/&gt;APPROVAL&lt;br/&gt;Management" style="rhombus;whiteSpace=wrap;html=1;fillColor=#b85450;strokeColor=#a0322d;fontColor=#ffffff;fontSize=9;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="330" y="2340" width="200" height="85" as="geometry" />
+        </mxCell>
+
+        <mxCell id="a_to_prd_deploy" value="Approved" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#b85450;strokeWidth=2;fontSize=9;fontStyle=1;" edge="1" source="g_prd_approval" target="s_prd" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <!-- PROD DEPLOY -->
+        <mxCell id="s_prd" value="&lt;b&gt;Deploy to PROD&lt;/b&gt; — Blue/Green (cpm-peh-prd)&lt;br/&gt;Dedicated HA EKS · Multi-AZ · Same immutable image artifact" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=10;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="220" y="2462" width="420" height="55" as="geometry" />
+        </mxCell>
+
+        <mxCell id="a_prd_health" value="" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#b85450;strokeWidth=2;" edge="1" source="s_prd" target="s_health" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <!-- Health Check + Monitor -->
+        <mxCell id="s_health" value="&lt;b&gt;Health Checks + Monitoring&lt;/b&gt;&lt;br/&gt;Liveness/Readiness probes · Prometheus metrics · CloudWatch alarms" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="220" y="2552" width="420" height="55" as="geometry" />
+        </mxCell>
+
+        <mxCell id="a_health_gate" value="" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#9673a6;strokeWidth=2;" edge="1" source="s_health" target="g_health" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <mxCell id="g_health" value="Healthy?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=10;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="330" y="2637" width="200" height="70" as="geometry" />
+        </mxCell>
+
+        <!-- Success -->
+        <mxCell id="a_success" value="YES" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#82b366;strokeWidth=2;fontSize=9;fontStyle=1;" edge="1" source="g_health" target="s_success" parent="1"><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="430" y="2740" /></Array></mxGeometry></mxCell>
+        <mxCell id="s_success" value="✅ Deployment Successful&lt;br/&gt;Notify team · DORA metrics recorded · Green traffic 100%" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#82b366;strokeColor=#4d7a3c;fontColor=#ffffff;fontSize=10;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="220" y="2745" width="420" height="55" as="geometry" />
+        </mxCell>
+
+        <!-- Rollback -->
+        <mxCell id="a_rollback" value="NO → Rollback" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#b85450;strokeWidth=2;dashed=1;fontSize=9;fontStyle=1;" edge="1" source="g_health" target="s_rollback" parent="1"><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="730" y="2672" /></Array></mxGeometry></mxCell>
+        <mxCell id="s_rollback" value="🔄 Auto-Rollback&lt;br/&gt;ArgoCD reverts to last good commit&lt;br/&gt;Blue/Green DNS switch back &lt; 2 min&lt;br/&gt;PagerDuty alert fired" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#b85450;strokeColor=#a0322d;fontColor=#ffffff;fontSize=9;" vertex="1" parent="1">
+          <mxGeometry x="780" y="2632" width="200" height="80" as="geometry" />
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

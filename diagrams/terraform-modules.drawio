@@ -1,0 +1,164 @@
+<mxfile host="Electron" modified="2026-07-10T05:30:00.000Z" agent="Cascade" version="21.0.0" type="device">
+  <diagram id="terraform-modules" name="Terraform Module Structure">
+    <mxGraphModel dx="1400" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- TITLE -->
+        <mxCell id="title" value="CPM Platform — Terraform IaC Module Structure &amp; State Isolation" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=18;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="100" y="15" width="1200" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="sub" value="One state file per component per environment · Reusable module library · Cloud-agnostic abstraction" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=11;fontStyle=2;" vertex="1" parent="1">
+          <mxGeometry x="100" y="42" width="1200" height="18" as="geometry" />
+        </mxCell>
+
+        <!-- ================================================ -->
+        <!-- LEFT: MODULE LIBRARY                              -->
+        <!-- ================================================ -->
+        <mxCell id="lib_outer" value="terraform-modules/  (Reusable Module Library)" style="swimlane;startSize=35;fillColor=#dae8fc;strokeColor=#6c8ebf;fontStyle=1;fontSize=13;rounded=1;arcSize=2;" vertex="1" parent="1">
+          <mxGeometry x="30" y="75" width="480" height="1010" as="geometry" />
+        </mxCell>
+
+        <!-- networking -->
+        <mxCell id="m_net" value="networking/" style="swimlane;startSize=28;fillColor=#f5f5f5;strokeColor=#666;fontStyle=1;fontSize=11;rounded=1;" vertex="1" parent="lib_outer">
+          <mxGeometry x="15" y="45" width="450" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="m_vpc" value="vpc/&lt;br/&gt;VPC · Subnets · Route Tables · NAT GW · IGW" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=9;" vertex="1" parent="m_net"><mxGeometry x="10" y="33" width="430" height="32" as="geometry" /></mxCell>
+
+        <!-- compute -->
+        <mxCell id="m_comp" value="compute/" style="swimlane;startSize=28;fillColor=#f5f5f5;strokeColor=#666;fontStyle=1;fontSize=11;rounded=1;" vertex="1" parent="lib_outer">
+          <mxGeometry x="15" y="140" width="450" height="115" as="geometry" />
+        </mxCell>
+        <mxCell id="m_eks" value="eks/&lt;br/&gt;EKS Cluster · Node Groups · OIDC · Add-ons (CoreDNS, kube-proxy)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=9;" vertex="1" parent="m_comp"><mxGeometry x="10" y="32" width="210" height="68" as="geometry" /></mxCell>
+        <mxCell id="m_lambda" value="lambda/&lt;br/&gt;Lambda Function · IAM Role · Log Group · Triggers" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=9;" vertex="1" parent="m_comp"><mxGeometry x="230" y="32" width="210" height="68" as="geometry" /></mxCell>
+
+        <!-- messaging -->
+        <mxCell id="m_msg" value="messaging/" style="swimlane;startSize=28;fillColor=#f5f5f5;strokeColor=#666;fontStyle=1;fontSize=11;rounded=1;" vertex="1" parent="lib_outer">
+          <mxGeometry x="15" y="270" width="450" height="115" as="geometry" />
+        </mxCell>
+        <mxCell id="m_msk" value="msk/&lt;br/&gt;MSK Cluster · Brokers · Config" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=9;" vertex="1" parent="m_msg"><mxGeometry x="10" y="32" width="130" height="68" as="geometry" /></mxCell>
+        <mxCell id="m_sqs" value="sqs/&lt;br/&gt;Queue · DLQ · Policy · Encryption" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=9;" vertex="1" parent="m_msg"><mxGeometry x="155" y="32" width="130" height="68" as="geometry" /></mxCell>
+        <mxCell id="m_sns" value="sns/&lt;br/&gt;Topic · Subscriptions · Policy" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=9;" vertex="1" parent="m_msg"><mxGeometry x="300" y="32" width="140" height="68" as="geometry" /></mxCell>
+
+        <!-- storage -->
+        <mxCell id="m_stor" value="storage/" style="swimlane;startSize=28;fillColor=#f5f5f5;strokeColor=#666;fontStyle=1;fontSize=11;rounded=1;" vertex="1" parent="lib_outer">
+          <mxGeometry x="15" y="400" width="450" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="m_s3" value="s3/&lt;br/&gt;Bucket · Versioning · Lifecycle · SSE-KMS · Block Public Access" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=9;" vertex="1" parent="m_stor"><mxGeometry x="10" y="32" width="430" height="32" as="geometry" /></mxCell>
+
+        <!-- registry -->
+        <mxCell id="m_reg" value="registry/" style="swimlane;startSize=28;fillColor=#f5f5f5;strokeColor=#666;fontStyle=1;fontSize=11;rounded=1;" vertex="1" parent="lib_outer">
+          <mxGeometry x="15" y="495" width="450" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="m_ecr" value="ecr/&lt;br/&gt;ECR Repo · Lifecycle Policy · Scan on Push · Immutable Tags" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=9;" vertex="1" parent="m_reg"><mxGeometry x="10" y="32" width="430" height="32" as="geometry" /></mxCell>
+
+        <!-- security -->
+        <mxCell id="m_sec" value="security/" style="swimlane;startSize=28;fillColor=#f5f5f5;strokeColor=#666;fontStyle=1;fontSize=11;rounded=1;" vertex="1" parent="lib_outer">
+          <mxGeometry x="15" y="590" width="450" height="115" as="geometry" />
+        </mxCell>
+        <mxCell id="m_iam" value="iam/&lt;br/&gt;Roles · Policies · Instance Profiles · IRSA" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=9;" vertex="1" parent="m_sec"><mxGeometry x="10" y="32" width="210" height="68" as="geometry" /></mxCell>
+        <mxCell id="m_secrets" value="secrets/&lt;br/&gt;Secrets Manager · KMS Keys · Aliases" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=9;" vertex="1" parent="m_sec"><mxGeometry x="230" y="32" width="210" height="68" as="geometry" /></mxCell>
+
+        <!-- observability -->
+        <mxCell id="m_obs" value="observability/" style="swimlane;startSize=28;fillColor=#f5f5f5;strokeColor=#666;fontStyle=1;fontSize=11;rounded=1;" vertex="1" parent="lib_outer">
+          <mxGeometry x="15" y="720" width="450" height="115" as="geometry" />
+        </mxCell>
+        <mxCell id="m_cw" value="cloudwatch/&lt;br/&gt;Log Groups · Dashboards · Alarms · Metric Filters" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=9;" vertex="1" parent="m_obs"><mxGeometry x="10" y="32" width="210" height="68" as="geometry" /></mxCell>
+        <mxCell id="m_prom" value="prometheus/&lt;br/&gt;Prometheus + Grafana on EKS · AlertManager" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=9;" vertex="1" parent="m_obs"><mxGeometry x="230" y="32" width="210" height="68" as="geometry" /></mxCell>
+
+        <!-- state backend bootstrap -->
+        <mxCell id="m_state" value="state-backend/bootstrap/&lt;br/&gt;S3 Bucket (versioned+encrypted) · DynamoDB lock tables · One-time setup per account" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#444;fontSize=9;fontStyle=2;" vertex="1" parent="lib_outer">
+          <mxGeometry x="15" y="852" width="450" height="55" as="geometry" />
+        </mxCell>
+
+        <!-- Cloud-agnostic note -->
+        <mxCell id="m_cloud" value="Cloud-Agnostic: aws/ · gcp/ · azure/ sub-dirs per module&lt;br/&gt;Switch provider via variable — no structural rewrite" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=9;fontStyle=2;" vertex="1" parent="lib_outer">
+          <mxGeometry x="15" y="920" width="450" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- ================================================ -->
+        <!-- CENTER: ARROWS                                    -->
+        <!-- ================================================ -->
+        <mxCell id="uses1" value="&lt;b&gt;consumes modules via&lt;/b&gt;&lt;br/&gt;module source = &quot;../../terraform-modules/...&quot;" style="text;html=1;strokeColor=none;fillColor=none;align=center;fontSize=10;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="530" y="440" width="200" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="arr_main" value="" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#6c8ebf;strokeWidth=3;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" edge="1" source="lib_outer" target="env_outer" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- ================================================ -->
+        <!-- RIGHT: ENVIRONMENTS                               -->
+        <!-- ================================================ -->
+        <mxCell id="env_outer" value="environments/  (Per-Env Configuration)" style="swimlane;startSize=35;fillColor=#d5e8d4;strokeColor=#82b366;fontStyle=1;fontSize=13;rounded=1;arcSize=2;" vertex="1" parent="1">
+          <mxGeometry x="750" y="75" width="450" height="1010" as="geometry" />
+        </mxCell>
+
+        <!-- DEV env -->
+        <mxCell id="e_dev" value="dev/" style="swimlane;startSize=26;fillColor=#dae8fc;strokeColor=#6c8ebf;fontStyle=1;fontSize=10;rounded=1;" vertex="1" parent="env_outer">
+          <mxGeometry x="15" y="45" width="420" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="ed_tf" value="backend.tf · key=&quot;dev/&lt;component&gt;/terraform.tfstate&quot;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666;fontSize=8;" vertex="1" parent="e_dev"><mxGeometry x="10" y="32" width="400" height="25" as="geometry" /></mxCell>
+        <mxCell id="ed_vars" value="terraform.tfvars · Single-AZ · t3.medium · kafka.t3.small" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666;fontSize=8;" vertex="1" parent="e_dev"><mxGeometry x="10" y="63" width="400" height="25" as="geometry" /></mxCell>
+        <mxCell id="ed_dirs" value="vpc/ · eks/ · kafka/ · sqs/ · sns/ · s3/ · lambda/" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=8;" vertex="1" parent="e_dev"><mxGeometry x="10" y="94" width="400" height="25" as="geometry" /></mxCell>
+        <mxCell id="ed_pipe" value="Pipeline: CPM-*-DEV-CI / CPM-*-DEV-CD" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=8;fontStyle=2;" vertex="1" parent="e_dev"><mxGeometry x="10" y="125" width="400" height="25" as="geometry" /></mxCell>
+
+        <!-- INT env -->
+        <mxCell id="e_int" value="int/" style="swimlane;startSize=26;fillColor=#d5e8d4;strokeColor=#82b366;fontStyle=1;fontSize=10;rounded=1;" vertex="1" parent="env_outer">
+          <mxGeometry x="15" y="220" width="420" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="ei_tf" value="backend.tf · key=&quot;int/&lt;component&gt;/terraform.tfstate&quot;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666;fontSize=8;" vertex="1" parent="e_int"><mxGeometry x="10" y="32" width="400" height="25" as="geometry" /></mxCell>
+        <mxCell id="ei_vars" value="terraform.tfvars · Single-AZ · t3.large · kafka.t3.small" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666;fontSize=8;" vertex="1" parent="e_int"><mxGeometry x="10" y="63" width="400" height="25" as="geometry" /></mxCell>
+        <mxCell id="ei_pipe" value="Pipeline: CPM-*-INT-CI / CPM-*-INT-CD" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=8;fontStyle=2;" vertex="1" parent="e_int"><mxGeometry x="10" y="94" width="400" height="25" as="geometry" /></mxCell>
+
+        <!-- STG env -->
+        <mxCell id="e_stg" value="stg/" style="swimlane;startSize=26;fillColor=#e1d5e7;strokeColor=#9673a6;fontStyle=1;fontSize=10;rounded=1;" vertex="1" parent="env_outer">
+          <mxGeometry x="15" y="365" width="420" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="es_tf" value="backend.tf · key=&quot;stg/&lt;component&gt;/terraform.tfstate&quot;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666;fontSize=8;" vertex="1" parent="e_stg"><mxGeometry x="10" y="32" width="400" height="25" as="geometry" /></mxCell>
+        <mxCell id="es_vars" value="terraform.tfvars · Multi-AZ · m5.large · Dedicated EKS" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666;fontSize=8;" vertex="1" parent="e_stg"><mxGeometry x="10" y="63" width="400" height="25" as="geometry" /></mxCell>
+        <mxCell id="es_pipe" value="Pipeline: CPM-*-STG-CI / CPM-*-STG-CD" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=8;fontStyle=2;" vertex="1" parent="e_stg"><mxGeometry x="10" y="94" width="400" height="25" as="geometry" /></mxCell>
+
+        <!-- PRF env -->
+        <mxCell id="e_prf" value="prf/" style="swimlane;startSize=26;fillColor=#fff2cc;strokeColor=#d6b656;fontStyle=1;fontSize=10;rounded=1;" vertex="1" parent="env_outer">
+          <mxGeometry x="15" y="510" width="420" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="ep_tf" value="backend.tf · key=&quot;prf/&lt;component&gt;/terraform.tfstate&quot;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666;fontSize=8;" vertex="1" parent="e_prf"><mxGeometry x="10" y="32" width="400" height="25" as="geometry" /></mxCell>
+        <mxCell id="ep_vars" value="terraform.tfvars · Multi-AZ · m5.2xlarge · Prod-like sizing" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666;fontSize=8;" vertex="1" parent="e_prf"><mxGeometry x="10" y="63" width="400" height="25" as="geometry" /></mxCell>
+        <mxCell id="ep_pipe" value="Pipeline: CPM-*-PRF-CI / CPM-*-PRF-CD" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=8;fontStyle=2;" vertex="1" parent="e_prf"><mxGeometry x="10" y="94" width="400" height="25" as="geometry" /></mxCell>
+
+        <!-- PRD env -->
+        <mxCell id="e_prd" value="prd/" style="swimlane;startSize=26;fillColor=#f8cecc;strokeColor=#b85450;strokeWidth=2;fontStyle=1;fontSize=10;rounded=1;" vertex="1" parent="env_outer">
+          <mxGeometry x="15" y="655" width="420" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="epd_tf" value="backend.tf · key=&quot;prd/&lt;component&gt;/terraform.tfstate&quot;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666;fontSize=8;" vertex="1" parent="e_prd"><mxGeometry x="10" y="32" width="400" height="25" as="geometry" /></mxCell>
+        <mxCell id="epd_vars" value="terraform.tfvars · Multi-AZ HA · m5.2xlarge · 3-broker Kafka&lt;br/&gt;enable_waf=true · enable_shield=true · multi_az=true" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666;fontSize=8;" vertex="1" parent="e_prd"><mxGeometry x="10" y="63" width="400" height="35" as="geometry" /></mxCell>
+        <mxCell id="epd_pipe" value="Pipeline: CPM-*-PRD-CI / CPM-*-PRD-CD (Manual Approval)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=8;fontStyle=2;" vertex="1" parent="e_prd"><mxGeometry x="10" y="104" width="400" height="25" as="geometry" /></mxCell>
+        <mxCell id="epd_note" value="⚠ Separate AWS Account · Tightest IAM · prevent_destroy=true" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#b85450;strokeColor=#a0322d;fontColor=#ffffff;fontSize=8;fontStyle=1;" vertex="1" parent="e_prd"><mxGeometry x="10" y="135" width="400" height="20" as="geometry" /></mxCell>
+
+        <!-- State note -->
+        <mxCell id="state_note" value="&lt;b&gt;State Isolation Principle:&lt;/b&gt;&lt;br/&gt;cpm-tf-state-&lt;account-id&gt; / &lt;env&gt; / &lt;component&gt; / terraform.tfstate&lt;br/&gt;Each component+env = independent S3 key + DynamoDB lock" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#444;fontSize=9;" vertex="1" parent="env_outer">
+          <mxGeometry x="15" y="840" width="420" height="65" as="geometry" />
+        </mxCell>
+
+        <!-- Env separation note -->
+        <mxCell id="env_note" value="&lt;b&gt;Environment Separation:&lt;/b&gt;&lt;br/&gt;DEV+INT → Shared AWS Account · STAGE+PERF → Non-Prod Account · PROD → Dedicated Prod Account" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=9;fontStyle=2;" vertex="1" parent="env_outer">
+          <mxGeometry x="15" y="920" width="420" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- ================================================ -->
+        <!-- BOTTOM: NAMING CONVENTION REFERENCE              -->
+        <!-- ================================================ -->
+        <mxCell id="naming" value="Naming Convention Quick Reference" style="swimlane;startSize=30;fillColor=#fff2cc;strokeColor=#d6b656;fontStyle=1;fontSize=12;rounded=1;" vertex="1" parent="1">
+          <mxGeometry x="30" y="1105" width="1170" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="n1" value="&lt;b&gt;Pipeline:&lt;/b&gt; CPM-&lt;APP&gt;-&lt;ENV&gt;-&lt;CI|CD&gt;&lt;br/&gt;e.g., CPM-PEH-PRD-CD" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=9;" vertex="1" parent="naming"><mxGeometry x="10" y="38" width="220" height="80" as="geometry" /></mxCell>
+        <mxCell id="n2" value="&lt;b&gt;EKS Cluster:&lt;/b&gt; cpm-&lt;env&gt;-eks&lt;br/&gt;&lt;b&gt;Namespace:&lt;/b&gt; cpm-&lt;app&gt;-&lt;env&gt;&lt;br/&gt;e.g., cpm-peh-prd" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=9;" vertex="1" parent="naming"><mxGeometry x="240" y="38" width="220" height="80" as="geometry" /></mxCell>
+        <mxCell id="n3" value="&lt;b&gt;AWS Resources:&lt;/b&gt; cpm-&lt;env&gt;-*&lt;br/&gt;e.g., cpm-prd-kafka · cpm-dev-*-queue&lt;br/&gt;cpm-prd-*-topic · cpm-dev-*" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=9;" vertex="1" parent="naming"><mxGeometry x="470" y="38" width="220" height="80" as="geometry" /></mxCell>
+        <mxCell id="n4" value="&lt;b&gt;TF State Key:&lt;/b&gt; &lt;env&gt;/&lt;component&gt;/terraform.tfstate&lt;br/&gt;e.g., prd/kafka/terraform.tfstate&lt;br/&gt;No sharing between envs or components" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=9;" vertex="1" parent="naming"><mxGeometry x="700" y="38" width="220" height="80" as="geometry" /></mxCell>
+        <mxCell id="n5" value="&lt;b&gt;Image Tag:&lt;/b&gt; &lt;git-sha&gt;-&lt;build#&gt;&lt;br/&gt;e.g., a1b2c3d4-42&lt;br/&gt;Immutable · Same digest PROD as DEV" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=9;" vertex="1" parent="naming"><mxGeometry x="930" y="38" width="220" height="80" as="geometry" /></mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

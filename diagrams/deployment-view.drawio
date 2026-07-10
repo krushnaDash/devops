@@ -1,0 +1,259 @@
+<mxfile host="Electron" modified="2026-07-10T05:30:00.000Z" agent="Cascade" version="21.0.0" type="device">
+  <diagram id="deployment-view" name="Deployment Architecture">
+    <mxGraphModel dx="1400" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2339" pageHeight="1654" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- TITLE -->
+        <mxCell id="title" value="CPM Platform — Deployment Architecture View" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=20;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="20" width="650" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="subtitle" value="GitOps-driven · Cloud-Agnostic · Environment-Isolated · Immutable Artifacts" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=11;fontStyle=2;" vertex="1" parent="1">
+          <mxGeometry x="40" y="48" width="650" height="20" as="geometry" />
+        </mxCell>
+
+        <!-- ================================================ -->
+        <!-- SOURCE CONTROL                                    -->
+        <!-- ================================================ -->
+        <mxCell id="sc" value="Source Control" style="swimlane;startSize=30;fillColor=#dae8fc;strokeColor=#6c8ebf;fontStyle=1;fontSize=12;rounded=1;arcSize=4;" vertex="1" parent="1">
+          <mxGeometry x="40" y="80" width="260" height="330" as="geometry" />
+        </mxCell>
+        <mxCell id="sc_gh" value="GitHub / GitLab" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#6d8764;strokeColor=#3a5431;fontColor=#ffffff;fontStyle=1;fontSize=11;" vertex="1" parent="sc">
+          <mxGeometry x="30" y="45" width="200" height="38" as="geometry" />
+        </mxCell>
+        <mxCell id="sc_apps" value="&lt;b&gt;App Repositories&lt;/b&gt;&lt;br/&gt;PEH · NED · Lambda · Services" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=9;" vertex="1" parent="sc">
+          <mxGeometry x="30" y="100" width="200" height="45" as="geometry" />
+        </mxCell>
+        <mxCell id="sc_gitops" value="&lt;b&gt;GitOps Config Repo&lt;/b&gt;&lt;br/&gt;Helm Values · K8s Manifests" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=9;" vertex="1" parent="sc">
+          <mxGeometry x="30" y="162" width="200" height="45" as="geometry" />
+        </mxCell>
+        <mxCell id="sc_iac" value="&lt;b&gt;Terraform IaC Repo&lt;/b&gt;&lt;br/&gt;Modules · Environments" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=9;" vertex="1" parent="sc">
+          <mxGeometry x="30" y="224" width="200" height="45" as="geometry" />
+        </mxCell>
+
+        <!-- ================================================ -->
+        <!-- CI/CD PLATFORM                                    -->
+        <!-- ================================================ -->
+        <mxCell id="ci" value="CI/CD Platform" style="swimlane;startSize=30;fillColor=#d5e8d4;strokeColor=#82b366;fontStyle=1;fontSize=12;rounded=1;arcSize=4;" vertex="1" parent="1">
+          <mxGeometry x="360" y="80" width="280" height="330" as="geometry" />
+        </mxCell>
+        <mxCell id="ci_engine" value="GitHub Actions / Jenkins" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#82b366;strokeColor=#4d7a3c;fontColor=#ffffff;fontStyle=1;fontSize=10;" vertex="1" parent="ci">
+          <mxGeometry x="30" y="45" width="220" height="38" as="geometry" />
+        </mxCell>
+        <mxCell id="ci_stages" value="&lt;b&gt;CI Pipeline&lt;/b&gt;&lt;br/&gt;Build → Unit Test → Package" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=9;" vertex="1" parent="ci">
+          <mxGeometry x="30" y="100" width="220" height="45" as="geometry" />
+        </mxCell>
+        <mxCell id="ci_scan" value="&lt;b&gt;Security Scanning&lt;/b&gt;&lt;br/&gt;SonarQube · Trivy · Checkmarx · Gitleaks" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=9;" vertex="1" parent="ci">
+          <mxGeometry x="30" y="160" width="220" height="45" as="geometry" />
+        </mxCell>
+        <mxCell id="ci_gate" value="&lt;b&gt;Quality Gate ✓&lt;/b&gt;&lt;br/&gt;Coverage ≥80% · No Critical CVE · IaC Scan" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=9;" vertex="1" parent="ci">
+          <mxGeometry x="30" y="220" width="220" height="45" as="geometry" />
+        </mxCell>
+
+        <!-- ================================================ -->
+        <!-- ECR                                               -->
+        <!-- ================================================ -->
+        <mxCell id="ecr" value="Container Registry" style="swimlane;startSize=30;fillColor=#e1d5e7;strokeColor=#9673a6;fontStyle=1;fontSize=12;rounded=1;arcSize=4;" vertex="1" parent="1">
+          <mxGeometry x="700" y="80" width="250" height="155" as="geometry" />
+        </mxCell>
+        <mxCell id="ecr_repo" value="Amazon ECR&lt;br/&gt;&lt;i&gt;cpm-&lt;app&gt;-ecr&lt;/i&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#9673a6;strokeColor=#6d4a8a;fontColor=#ffffff;fontStyle=1;fontSize=10;" vertex="1" parent="ecr">
+          <mxGeometry x="30" y="42" width="190" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="ecr_tag" value="Tag: &lt;git-sha&gt;-&lt;build#&gt; · Immutable Tags&lt;br/&gt;Lifecycle Policies · Scan on Push" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#9673a6;fontSize=8;" vertex="1" parent="ecr">
+          <mxGeometry x="30" y="97" width="190" height="40" as="geometry" />
+        </mxCell>
+
+        <!-- ================================================ -->
+        <!-- ARGOCD                                            -->
+        <!-- ================================================ -->
+        <mxCell id="argo" value="GitOps Controller" style="swimlane;startSize=30;fillColor=#ffe6cc;strokeColor=#d79b00;fontStyle=1;fontSize=12;rounded=1;arcSize=4;" vertex="1" parent="1">
+          <mxGeometry x="700" y="255" width="250" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="argo_engine" value="ArgoCD" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d79b00;strokeColor=#b46504;fontColor=#ffffff;fontStyle=1;fontSize=13;" vertex="1" parent="argo">
+          <mxGeometry x="75" y="40" width="100" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="argo_detail" value="Pull-based GitOps · App-of-Apps Pattern&lt;br/&gt;Drift Detection · Auto-Rollback on Failure" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff3e0;strokeColor=#d79b00;fontSize=8;" vertex="1" parent="argo">
+          <mxGeometry x="20" y="100" width="210" height="40" as="geometry" />
+        </mxCell>
+
+        <!-- ================================================ -->
+        <!-- ATLANTIS (IaC GitOps)                             -->
+        <!-- ================================================ -->
+        <mxCell id="atlantis" value="IaC GitOps" style="swimlane;startSize=30;fillColor=#f5f5f5;strokeColor=#666;fontStyle=1;fontSize=11;rounded=1;arcSize=4;" vertex="1" parent="1">
+          <mxGeometry x="700" y="435" width="250" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="atl_box" value="Atlantis&lt;br/&gt;PR-driven tf plan + tf apply" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#444;fontSize=9;" vertex="1" parent="atlantis">
+          <mxGeometry x="20" y="40" width="210" height="45" as="geometry" />
+        </mxCell>
+
+        <!-- ================================================ -->
+        <!-- TERRAFORM STATE                                   -->
+        <!-- ================================================ -->
+        <mxCell id="tf" value="Terraform State Backend" style="swimlane;startSize=30;fillColor=#f5f5f5;strokeColor=#444444;fontStyle=1;fontSize=11;rounded=1;arcSize=4;" vertex="1" parent="1">
+          <mxGeometry x="40" y="460" width="600" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="tf_s3" value="&lt;b&gt;S3:&lt;/b&gt; cpm-tf-state-&lt;account-id&gt;&lt;br/&gt;Key: &lt;env&gt;/&lt;component&gt;/terraform.tfstate&lt;br/&gt;Per Component · Per Environment · SSE-KMS" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=8;" vertex="1" parent="tf">
+          <mxGeometry x="15" y="40" width="275" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="tf_ddb" value="&lt;b&gt;DynamoDB:&lt;/b&gt; cpm-tf-lock-&lt;env&gt;&lt;br/&gt;State Locking + Consistency&lt;br/&gt;One table per environment · PAY_PER_REQUEST" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=8;" vertex="1" parent="tf">
+          <mxGeometry x="305" y="40" width="275" height="70" as="geometry" />
+        </mxCell>
+
+        <!-- ================================================ -->
+        <!-- MONITORING                                        -->
+        <!-- ================================================ -->
+        <mxCell id="mon" value="Monitoring &amp; Observability" style="swimlane;startSize=30;fillColor=#f5f5f5;strokeColor=#444444;fontStyle=1;fontSize=11;rounded=1;arcSize=4;" vertex="1" parent="1">
+          <mxGeometry x="40" y="610" width="600" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="mon_cw" value="CloudWatch&lt;br/&gt;Logs + Metrics + Alarms" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=9;" vertex="1" parent="mon">
+          <mxGeometry x="15" y="42" width="175" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="mon_prom" value="Prometheus + Grafana&lt;br/&gt;K8s Metrics · Dashboards" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=9;" vertex="1" parent="mon">
+          <mxGeometry x="205" y="42" width="175" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="mon_xray" value="AWS X-Ray / Jaeger&lt;br/&gt;Distributed Tracing · DORA Metrics" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=9;" vertex="1" parent="mon">
+          <mxGeometry x="395" y="42" width="185" height="70" as="geometry" />
+        </mxCell>
+
+        <!-- ================================================ -->
+        <!-- AWS CLOUD ENVIRONMENTS (BIG CONTAINER)           -->
+        <!-- ================================================ -->
+        <mxCell id="aws" value="AWS Cloud — CPM Platform Environments" style="swimlane;startSize=42;fillColor=#fafafa;strokeColor=#232F3E;strokeWidth=3;fontStyle=1;fontSize=14;rounded=1;arcSize=2;" vertex="1" parent="1">
+          <mxGeometry x="1010" y="80" width="1310" height="750" as="geometry" />
+        </mxCell>
+
+        <!-- DEV -->
+        <mxCell id="dev" value="DEV" style="swimlane;startSize=30;fillColor=#dae8fc;strokeColor=#6c8ebf;fontStyle=1;fontSize=13;rounded=1;arcSize=4;" vertex="1" parent="aws">
+          <mxGeometry x="15" y="55" width="233" height="650" as="geometry" />
+        </mxCell>
+        <mxCell id="dev_vpc" value="VPC: cpm-dev-vpc" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=8;" vertex="1" parent="dev"><mxGeometry x="8" y="38" width="217" height="25" as="geometry" /></mxCell>
+        <mxCell id="dev_eks" value="EKS (Shared) · cpm-dev-eks" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=9;fontStyle=1;" vertex="1" parent="dev"><mxGeometry x="8" y="73" width="217" height="40" as="geometry" /></mxCell>
+        <mxCell id="dev_ns" value="NS: cpm-peh-dev&lt;br/&gt;NS: cpm-ned-dev" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666;fontSize=8;" vertex="1" parent="dev"><mxGeometry x="8" y="123" width="217" height="38" as="geometry" /></mxCell>
+        <mxCell id="dev_hpa" value="HPA + Cluster Autoscaler" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#82b366;fontSize=8;" vertex="1" parent="dev"><mxGeometry x="8" y="171" width="217" height="25" as="geometry" /></mxCell>
+        <mxCell id="dev_kafka" value="MSK: cpm-dev-kafka" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=8;" vertex="1" parent="dev"><mxGeometry x="8" y="211" width="217" height="25" as="geometry" /></mxCell>
+        <mxCell id="dev_sqs" value="SQS: cpm-dev-*-queue" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=8;" vertex="1" parent="dev"><mxGeometry x="8" y="246" width="217" height="25" as="geometry" /></mxCell>
+        <mxCell id="dev_sns" value="SNS: cpm-dev-*-topic" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=8;" vertex="1" parent="dev"><mxGeometry x="8" y="281" width="217" height="25" as="geometry" /></mxCell>
+        <mxCell id="dev_s3" value="S3: cpm-dev-*" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=8;" vertex="1" parent="dev"><mxGeometry x="8" y="316" width="217" height="25" as="geometry" /></mxCell>
+        <mxCell id="dev_lambda" value="Lambda: cpm-dev-*" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=8;" vertex="1" parent="dev"><mxGeometry x="8" y="351" width="217" height="25" as="geometry" /></mxCell>
+        <mxCell id="dev_sec" value="Secrets Manager: cpm-dev/*" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=8;" vertex="1" parent="dev"><mxGeometry x="8" y="391" width="217" height="25" as="geometry" /></mxCell>
+        <mxCell id="dev_gate" value="✓ Smoke Tests (Automated)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=8;fontStyle=2;" vertex="1" parent="dev"><mxGeometry x="8" y="428" width="217" height="28" as="geometry" /></mxCell>
+
+        <!-- INT -->
+        <mxCell id="int" value="INT" style="swimlane;startSize=30;fillColor=#d5e8d4;strokeColor=#82b366;fontStyle=1;fontSize=13;rounded=1;arcSize=4;" vertex="1" parent="aws">
+          <mxGeometry x="268" y="55" width="233" height="650" as="geometry" />
+        </mxCell>
+        <mxCell id="int_vpc" value="VPC: cpm-int-vpc" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=8;" vertex="1" parent="int"><mxGeometry x="8" y="38" width="217" height="25" as="geometry" /></mxCell>
+        <mxCell id="int_eks" value="EKS (Shared) · cpm-int-eks" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=9;fontStyle=1;" vertex="1" parent="int"><mxGeometry x="8" y="73" width="217" height="40" as="geometry" /></mxCell>
+        <mxCell id="int_ns" value="NS: cpm-peh-int&lt;br/&gt;NS: cpm-ned-int" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666;fontSize=8;" vertex="1" parent="int"><mxGeometry x="8" y="123" width="217" height="38" as="geometry" /></mxCell>
+        <mxCell id="int_hpa" value="HPA + Cluster Autoscaler" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#82b366;fontSize=8;" vertex="1" parent="int"><mxGeometry x="8" y="171" width="217" height="25" as="geometry" /></mxCell>
+        <mxCell id="int_kafka" value="MSK: cpm-int-kafka" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=8;" vertex="1" parent="int"><mxGeometry x="8" y="211" width="217" height="25" as="geometry" /></mxCell>
+        <mxCell id="int_sqs" value="SQS: cpm-int-*-queue" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=8;" vertex="1" parent="int"><mxGeometry x="8" y="246" width="217" height="25" as="geometry" /></mxCell>
+        <mxCell id="int_sns" value="SNS: cpm-int-*-topic" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=8;" vertex="1" parent="int"><mxGeometry x="8" y="281" width="217" height="25" as="geometry" /></mxCell>
+        <mxCell id="int_s3" value="S3: cpm-int-*" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=8;" vertex="1" parent="int"><mxGeometry x="8" y="316" width="217" height="25" as="geometry" /></mxCell>
+        <mxCell id="int_lambda" value="Lambda: cpm-int-*" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=8;" vertex="1" parent="int"><mxGeometry x="8" y="351" width="217" height="25" as="geometry" /></mxCell>
+        <mxCell id="int_sec" value="Secrets Manager: cpm-int/*" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=8;" vertex="1" parent="int"><mxGeometry x="8" y="391" width="217" height="25" as="geometry" /></mxCell>
+        <mxCell id="int_gate" value="✓ Integration Tests (Automated)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=8;fontStyle=2;" vertex="1" parent="int"><mxGeometry x="8" y="428" width="217" height="28" as="geometry" /></mxCell>
+
+        <!-- STAGE -->
+        <mxCell id="stg" value="STAGE" style="swimlane;startSize=30;fillColor=#e1d5e7;strokeColor=#9673a6;fontStyle=1;fontSize=13;rounded=1;arcSize=4;" vertex="1" parent="aws">
+          <mxGeometry x="521" y="55" width="233" height="650" as="geometry" />
+        </mxCell>
+        <mxCell id="stg_vpc" value="VPC: cpm-stg-vpc" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=8;" vertex="1" parent="stg"><mxGeometry x="8" y="38" width="217" height="25" as="geometry" /></mxCell>
+        <mxCell id="stg_eks" value="EKS (Dedicated) · cpm-stg-eks" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=9;fontStyle=1;" vertex="1" parent="stg"><mxGeometry x="8" y="73" width="217" height="40" as="geometry" /></mxCell>
+        <mxCell id="stg_ns" value="NS: cpm-peh-stg&lt;br/&gt;NS: cpm-ned-stg" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666;fontSize=8;" vertex="1" parent="stg"><mxGeometry x="8" y="123" width="217" height="38" as="geometry" /></mxCell>
+        <mxCell id="stg_hpa" value="HPA + KEDA Autoscaling" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#82b366;fontSize=8;" vertex="1" parent="stg"><mxGeometry x="8" y="171" width="217" height="25" as="geometry" /></mxCell>
+        <mxCell id="stg_kafka" value="MSK: cpm-stg-kafka" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=8;" vertex="1" parent="stg"><mxGeometry x="8" y="211" width="217" height="25" as="geometry" /></mxCell>
+        <mxCell id="stg_sqs" value="SQS: cpm-stg-*-queue" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=8;" vertex="1" parent="stg"><mxGeometry x="8" y="246" width="217" height="25" as="geometry" /></mxCell>
+        <mxCell id="stg_sns" value="SNS: cpm-stg-*-topic" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=8;" vertex="1" parent="stg"><mxGeometry x="8" y="281" width="217" height="25" as="geometry" /></mxCell>
+        <mxCell id="stg_s3" value="S3: cpm-stg-*" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=8;" vertex="1" parent="stg"><mxGeometry x="8" y="316" width="217" height="25" as="geometry" /></mxCell>
+        <mxCell id="stg_lambda" value="Lambda: cpm-stg-*" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=8;" vertex="1" parent="stg"><mxGeometry x="8" y="351" width="217" height="25" as="geometry" /></mxCell>
+        <mxCell id="stg_sec" value="Secrets Manager: cpm-stg/*" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=8;" vertex="1" parent="stg"><mxGeometry x="8" y="391" width="217" height="25" as="geometry" /></mxCell>
+        <mxCell id="stg_gate" value="⚠ Regression + UAT (Manual Gate)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=8;fontStyle=2;" vertex="1" parent="stg"><mxGeometry x="8" y="428" width="217" height="28" as="geometry" /></mxCell>
+
+        <!-- PERF -->
+        <mxCell id="prf" value="PERF" style="swimlane;startSize=30;fillColor=#fff2cc;strokeColor=#d6b656;fontStyle=1;fontSize=13;rounded=1;arcSize=4;" vertex="1" parent="aws">
+          <mxGeometry x="774" y="55" width="233" height="650" as="geometry" />
+        </mxCell>
+        <mxCell id="prf_vpc" value="VPC: cpm-prf-vpc" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=8;" vertex="1" parent="prf"><mxGeometry x="8" y="38" width="217" height="25" as="geometry" /></mxCell>
+        <mxCell id="prf_eks" value="EKS (Dedicated) · cpm-prf-eks" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=9;fontStyle=1;" vertex="1" parent="prf"><mxGeometry x="8" y="73" width="217" height="40" as="geometry" /></mxCell>
+        <mxCell id="prf_ns" value="NS: cpm-peh-prf&lt;br/&gt;NS: cpm-ned-prf" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666;fontSize=8;" vertex="1" parent="prf"><mxGeometry x="8" y="123" width="217" height="38" as="geometry" /></mxCell>
+        <mxCell id="prf_hpa" value="HPA + KEDA + VPA (Recommend mode)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#82b366;fontSize=8;" vertex="1" parent="prf"><mxGeometry x="8" y="171" width="217" height="25" as="geometry" /></mxCell>
+        <mxCell id="prf_kafka" value="MSK: cpm-prf-kafka" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=8;" vertex="1" parent="prf"><mxGeometry x="8" y="211" width="217" height="25" as="geometry" /></mxCell>
+        <mxCell id="prf_sqs" value="SQS: cpm-prf-*-queue" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=8;" vertex="1" parent="prf"><mxGeometry x="8" y="246" width="217" height="25" as="geometry" /></mxCell>
+        <mxCell id="prf_sns" value="SNS: cpm-prf-*-topic" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=8;" vertex="1" parent="prf"><mxGeometry x="8" y="281" width="217" height="25" as="geometry" /></mxCell>
+        <mxCell id="prf_s3" value="S3: cpm-prf-*" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=8;" vertex="1" parent="prf"><mxGeometry x="8" y="316" width="217" height="25" as="geometry" /></mxCell>
+        <mxCell id="prf_lambda" value="Lambda: cpm-prf-*" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=8;" vertex="1" parent="prf"><mxGeometry x="8" y="351" width="217" height="25" as="geometry" /></mxCell>
+        <mxCell id="prf_sec" value="Secrets Manager: cpm-prf/*" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=8;" vertex="1" parent="prf"><mxGeometry x="8" y="391" width="217" height="25" as="geometry" /></mxCell>
+        <mxCell id="prf_gate" value="⚠ Load Tests / k6 · Locust (Manual Gate)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=8;fontStyle=2;" vertex="1" parent="prf"><mxGeometry x="8" y="428" width="217" height="28" as="geometry" /></mxCell>
+
+        <!-- PROD -->
+        <mxCell id="prd" value="PROD" style="swimlane;startSize=30;fillColor=#f8cecc;strokeColor=#b85450;strokeWidth=2;fontStyle=1;fontSize=13;rounded=1;arcSize=4;" vertex="1" parent="aws">
+          <mxGeometry x="1035" y="55" width="255" height="650" as="geometry" />
+        </mxCell>
+        <mxCell id="prd_vpc" value="VPC: cpm-prd-vpc (Multi-AZ)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=8;fontStyle=1;" vertex="1" parent="prd"><mxGeometry x="8" y="38" width="238" height="25" as="geometry" /></mxCell>
+        <mxCell id="prd_eks" value="EKS Dedicated HA · cpm-prd-eks&lt;br/&gt;Multi-AZ · 3 Node Groups · Spot+On-Demand" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=9;fontStyle=1;" vertex="1" parent="prd"><mxGeometry x="8" y="73" width="238" height="45" as="geometry" /></mxCell>
+        <mxCell id="prd_ns" value="NS: cpm-peh-prd · NS: cpm-ned-prd&lt;br/&gt;PodDisruptionBudget · NetworkPolicy · IRSA" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666;fontSize=8;" vertex="1" parent="prd"><mxGeometry x="8" y="128" width="238" height="38" as="geometry" /></mxCell>
+        <mxCell id="prd_hpa" value="HPA + KEDA · Cluster Autoscaler" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#82b366;fontSize=8;" vertex="1" parent="prd"><mxGeometry x="8" y="176" width="238" height="25" as="geometry" /></mxCell>
+        <mxCell id="prd_kafka" value="MSK: cpm-prd-kafka (HA · 3-broker)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=8;" vertex="1" parent="prd"><mxGeometry x="8" y="211" width="238" height="25" as="geometry" /></mxCell>
+        <mxCell id="prd_sqs" value="SQS: cpm-prd-*-queue + DLQ" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=8;" vertex="1" parent="prd"><mxGeometry x="8" y="246" width="238" height="25" as="geometry" /></mxCell>
+        <mxCell id="prd_sns" value="SNS: cpm-prd-*-topic" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=8;" vertex="1" parent="prd"><mxGeometry x="8" y="281" width="238" height="25" as="geometry" /></mxCell>
+        <mxCell id="prd_s3" value="S3: cpm-prd-* (Versioned · MFA Delete)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=8;" vertex="1" parent="prd"><mxGeometry x="8" y="316" width="238" height="25" as="geometry" /></mxCell>
+        <mxCell id="prd_lambda" value="Lambda: cpm-prd-* (Provisioned Concurrency)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=8;" vertex="1" parent="prd"><mxGeometry x="8" y="351" width="238" height="25" as="geometry" /></mxCell>
+        <mxCell id="prd_sec" value="WAF · Shield · GuardDuty · KMS&lt;br/&gt;Secrets Manager · ACM · CloudTrail" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=8;fontStyle=2;" vertex="1" parent="prd"><mxGeometry x="8" y="391" width="238" height="38" as="geometry" /></mxCell>
+        <mxCell id="prd_deploy" value="Blue/Green Deploy · Auto-Rollback&lt;br/&gt;⚠ MANUAL APPROVAL REQUIRED" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#b85450;strokeColor=#a0322d;fontColor=#ffffff;fontSize=8;fontStyle=1;" vertex="1" parent="prd"><mxGeometry x="8" y="440" width="238" height="38" as="geometry" /></mxCell>
+
+        <!-- Promotion arrows inside AWS -->
+        <mxCell id="p1" value="" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#6c8ebf;strokeWidth=2;" edge="1" source="dev_eks" target="int_eks" parent="aws"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="p2" value="" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#82b366;strokeWidth=2;" edge="1" source="int_eks" target="stg_eks" parent="aws"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="p3" value="" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#9673a6;strokeWidth=2;" edge="1" source="stg_eks" target="prf_eks" parent="aws"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="p4" value="" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#b85450;strokeWidth=2;" edge="1" source="prf_eks" target="prd_eks" parent="aws"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <!-- Promo label -->
+        <mxCell id="promo_lbl" value="Same immutable image artifact promoted through all environments — no rebuilds" style="text;html=1;strokeColor=none;fillColor=none;align=center;fontSize=10;fontStyle=2;" vertex="1" parent="aws">
+          <mxGeometry x="100" y="700" width="1100" height="28" as="geometry" />
+        </mxCell>
+
+        <!-- ================================================ -->
+        <!-- CROSS-ZONE EDGES                                  -->
+        <!-- ================================================ -->
+
+        <!-- App Repos → CI Engine -->
+        <mxCell id="e1" value="Code Push / PR" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#6c8ebf;strokeWidth=2;fontSize=9;fontStyle=1;rounded=1;" edge="1" source="sc_apps" target="ci_engine" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- CI → ECR -->
+        <mxCell id="e2" value="Push Image (git-sha tag)" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#9673a6;strokeWidth=2;fontSize=9;fontStyle=1;rounded=1;" edge="1" source="ci_stages" target="ecr_repo" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- CI → GitOps Repo (update image tag - dashed) -->
+        <mxCell id="e3" value="Update image tag" style="edgeStyle=elbowEdgeStyle;dashed=1;strokeColor=#82b366;strokeWidth=2;fontSize=9;fontStyle=1;rounded=1;" edge="1" source="ci_stages" target="sc_gitops" parent="1">
+          <mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="500" y="185" /><mxPoint x="170" y="185" /></Array></mxGeometry>
+        </mxCell>
+
+        <!-- GitOps Repo → ArgoCD -->
+        <mxCell id="e4" value="Watches &amp; Syncs" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#d79b00;strokeWidth=2;fontSize=9;fontStyle=1;rounded=1;" edge="1" source="sc_gitops" target="argo_engine" parent="1">
+          <mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="170" y="315" /><mxPoint x="825" y="315" /></Array></mxGeometry>
+        </mxCell>
+
+        <!-- ArgoCD → AWS environments -->
+        <mxCell id="e5" value="GitOps Deploy (pull-based)" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#d79b00;strokeWidth=2;fontSize=10;fontStyle=1;rounded=1;" edge="1" source="argo_engine" target="aws" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- IaC Repo → Atlantis -->
+        <mxCell id="e6" value="PR triggers plan/apply" style="edgeStyle=orthogonalEdgeStyle;dashed=1;strokeColor=#9673a6;strokeWidth=1;fontSize=8;rounded=1;" edge="1" source="sc_iac" target="atl_box" parent="1">
+          <mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="170" y="378" /><mxPoint x="825" y="485" /></Array></mxGeometry>
+        </mxCell>
+
+        <!-- Atlantis → TF State -->
+        <mxCell id="e7" value="" style="edgeStyle=orthogonalEdgeStyle;dashed=1;strokeColor=#444;strokeWidth=1;rounded=1;" edge="1" source="atl_box" target="tf" parent="1">
+          <mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="825" y="530" /><mxPoint x="340" y="530" /></Array></mxGeometry>
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
